@@ -1,0 +1,369 @@
+Total slides in E:\HealthCare_Presentation.pptx: 14
+================================================================================
+SLIDE 1
+--------------------------------------------------------------------------------
+[SPEAKER NOTES]:
+Good morning esteemed faculty and evaluation committee. Today, Devansh and I present our CA3 mini-project: 'Explainable Machine Learning for Alzheimer's Disease Classification Using Structural MRI and Clinical Features'. Our work addresses two of the most critical challenges in biomedical AI today: methodological validity without data leakage, and model interpretability using game-theoretic SHAP attributions.
+
+  [Text Shape 1 (Rounded Rectangle 2)]:
+BUSINESS INTELLIGENCE & ML MINI-PROJECT (CA3)
+
+  [Text Shape 2 (TextBox 3)]:
+Explainable Machine Learning for Alzheimer’s Disease Classification Using Structural MRI and Clinical Features
+
+  [Text Shape 3 (TextBox 4)]:
+Benchmark Investigation on OASIS-1 Cross-Sectional Neuroimaging & Cognitive Cohort
+
+  [Text Shape 5 (TextBox 6)]:
+Jay Thakare
+PRN: 23070521233Department of Computer Science & EngineeringSymbiosis Institute of Technology, Nagpur
+
+  [Text Shape 7 (TextBox 8)]:
+Devansh Gawali
+PRN: 23070521237Department of Computer Science & EngineeringSymbiosis Institute of Technology, Nagpur
+
+================================================================================
+SLIDE 2
+--------------------------------------------------------------------------------
+[SPEAKER NOTES]:
+Here we establish why this research is vital. Over 55 million people live with dementia today. Conventional cognitive tests like MMSE suffer from educational bias, while PET imaging is invasive and expensive. Structural MRI offers non-invasive, objective brain volumetry. By combining tabular MRI indices with clinical psychometrics, we can build fast, highly accurate, and deployable screening tools.
+
+  [Text Shape 0 (TextBox 1)]:
+CLINICAL CONTEXT & MOTIVATION
+
+  [Text Shape 1 (TextBox 2)]:
+Clinical Background & Research Motivation
+
+  [Text Shape 3 (TextBox 4)]:
+Global Dementia Crisis
+Prevalence: Over 55 million people worldwide live with dementia; projected to reach 139 million by 2050 (WHO).
+Etiology: Alzheimer’s Disease accounts for 60%–70% of clinical dementia cases.
+Therapeutic Window: Early intervention during mild stages significantly slows symptom onset and improves patient quality of life.
+
+  [Text Shape 5 (TextBox 6)]:
+Conventional Diagnostic Limits
+Psychometric Bias: MMSE and CDR cognitive screening tests are prone to educational and language bias.
+Invasive Biomarkers: PET imaging and lumbar puncture CSF assays are costly, invasive, and inaccessible in primary care.
+Subjectivity: Clinician scoring variability creates diagnostic delays during prodromal impairment.
+
+  [Text Shape 7 (TextBox 8)]:
+Structural MRI & AI Promise
+Objective Volumetry: Structural MRI quantifies macroscopic brain atrophy, ventriculomegaly, and parenchymal loss non-invasively.
+Multimodal Synergy: Combining cognitive scores with structural brain volumes yields superior predictive accuracy.
+Lightweight Deployment: Tabular morphometry avoids GPU dependency, enabling real-time clinical screening.
+
+================================================================================
+SLIDE 3
+--------------------------------------------------------------------------------
+[SPEAKER NOTES]:
+Here we define our problem statement and 4 core objectives. Notice problem number one: data leakage. Wen et al. in Medical Image Analysis 2020 showed that almost half of published studies suffer from data leakage because scans from the same patient appear in both train and test sets. Our objective is to build a mathematically sound, leak-free pipeline, benchmark 6 models, prove the value of MRI through ablation, and provide game-theoretic SHAP explanations.
+
+  [Text Shape 0 (TextBox 1)]:
+RESEARCH SCOPE & OBJECTIVES
+
+  [Text Shape 1 (TextBox 2)]:
+Problem Statement & Core Research Objectives
+
+  [Text Shape 3 (TextBox 4)]:
+The Central Research Challenges
+1. Data Leakage Crisis: Numerous published neuroimaging ML papers report inflated accuracies (>95%) because repeat scans of the same participant are mixed across train/test splits (Wen et al., 2020).
+2. Computational Barrier: Raw 3D volumetric CNNs require costly GPU clusters and extensive training hours, limiting bedside translation.
+3. The Black-Box Dilemma: Complex ensembles make unexplainable predictions, failing clinical verification and regulatory trust.
+
+  [Text Shape 5 (TextBox 6)]:
+Target Research Objectives
+Obj 1 - Zero-Leakage Pipeline: Design and enforce strict subject-level holdout partitioning (N=188 train, N=47 test) and scikit-learn pipeline encapsulation.
+Obj 2 - Multimodal Fusion Benchmark: Evaluate 6 classical and ensemble learning models (Dummy, LR, RF, SVM, GB, Soft Voting) combining clinical and structural MRI features.
+Obj 3 - Modality Ablation Analysis: Quantify the exact incremental diagnostic gain of structural MRI volumetrics over clinical psychometrics alone.
+Obj 4 - Game-Theoretic Explainability: Deploy TreeSHAP to generate global biomarker importance distributions and transparent patient-level local waterfall explanations.
+
+================================================================================
+SLIDE 4
+--------------------------------------------------------------------------------
+[SPEAKER NOTES]:
+Slide 4 synthesizes our verified literature matrix. We review the seminal OASIS paper by Marcus, the data leakage critique by Wen, the multimodal studies by Venugopalan, and the XAI clinical adoption studies by Lundberg, Yi, and Park. Our research bridges the exact gap identified: building a lightweight multimodal model with strict leakage prevention and verified SHAP explanations.
+
+  [Text Shape 0 (TextBox 1)]:
+ACADEMIC BENCHMARK & GAP
+
+  [Text Shape 1 (TextBox 2)]:
+Literature Review & Research Gap Analysis
+
+  [Text Shape 3 (TextBox 4)]:
+OASIS Benchmark & Data Leakage Pitfalls
+• Marcus et al. (2007) [J. Cogn. Neurosci.]: Established the OASIS-1 open benchmark with automated whole-brain volume (nWBV) and intracranial volume (eTIV).• Wen et al. (2020) [Med. Image Anal.]: Evaluated 32 deep learning studies, revealing 25-35% artificial accuracy inflation when splitting by scan rather than subject.
+
+  [Text Shape 5 (TextBox 6)]:
+Multimodal Clinical-MRI Fusion
+• Venugopalan et al. (2021) [Sci. Rep.]: Demonstrated multimodal clinical + sMRI autoencoders achieved 89.2% accuracy, beating unimodal MRI (76.5%).• Li et al. (2026) [Artif. Intell. Med.]: Cross-branch multimodal fusion showed synergistic gains, but incurred heavy GPU deployment constraints.
+
+  [Text Shape 7 (TextBox 8)]:
+Classical Ensembles & Validation Rigor
+• Alam et al. (2022) [Diagnostics]: Benchmarked SVM, RF, and soft voting on OASIS cross-sectional data (86.8% acc), but lacked local game-theoretic XAI.• Stammler et al. (2024) [NeuroImage]: Mandated scikit-learn pipeline encapsulation to avoid optimistic preprocessing leakage bias.
+
+  [Text Shape 9 (TextBox 10)]:
+Explainable AI (XAI) & Clinical Trust
+• Lundberg & Lee (2017) [NeurIPS]: Established TreeSHAP satisfying Efficiency, Symmetry, and Additivity axioms from cooperative game theory.• Yi et al. (2023) & Park et al. (2023): Confirmed that local SHAP waterfall plots increase physician diagnostic confidence by 34%.
+
+================================================================================
+SLIDE 5
+--------------------------------------------------------------------------------
+[SPEAKER NOTES]:
+On slide 5, we audit the OASIS-1 dataset. Total sessions: 436. But notice that 201 subjects are young controls without CDR. The clinically evaluated cohort consists of 235 unique subjects aged 60 to 96. 135 are nondemented controls and 100 have dementia. In the boxplots on the right, you clearly see that dementia patients have significantly lower MMSE scores and severely reduced normalized whole brain volume (nWBV).
+
+  [Text Shape 0 (TextBox 1)]:
+DATASET PROVENANCE & AUDIT
+
+  [Text Shape 1 (TextBox 2)]:
+OASIS-1 Dataset Audit & Cohort Characteristics
+
+  [Text Shape 3 (TextBox 4)]:
+OASIS-1 Cohort Architecture
+Total Imaging Sessions: 436 scan sessions across 416 subjects (1.5T Siemens Vision).
+Unassessed Young Cohort: 201 asymptomatic subjects (Age 18–59) unassessed for CDR (CDR=NaN).
+Assessed Older Cohort: 235 unique older adults (Age 60–96) with verified Clinical Dementia Rating.
+Binary Dementia Target: CDR = 0.0 (Control: N=135, 57.45%) vs. CDR > 0.0 (Dementia: N=100, 42.55%).
+Dementia Sub-stages: 70 Very Mild (CDR 0.5), 28 Mild (CDR 1.0), 2 Moderate (CDR 2.0).
+Missing Data Handled: SES has 19 missing records, imputed strictly using training median.
+
+  [Picture 5 (Picture 6)]: image bytes: 97573 bytes, format: image/jpeg
+  [Text Shape 6 (TextBox 7)]:
+Fig 2: Distribution of MMSE, nWBV, Age, and eTIV across CDR Diagnostic Groups.
+
+================================================================================
+SLIDE 6
+--------------------------------------------------------------------------------
+[SPEAKER NOTES]:
+Slide 6 walks through our end-to-end architecture shown in Figure 1. Notice the three distinct barriers against optimistic bias: first, subject holdout splitting; second, column transformer encapsulation where imputation and scaling parameters are learned strictly from the training partition; and third, internal 5-fold cross-validation followed by final testing on the isolated held-out test set.
+
+  [Text Shape 0 (TextBox 1)]:
+RESEARCH METHODOLOGY
+
+  [Text Shape 1 (TextBox 2)]:
+End-to-End Leak-Free Methodology Pipeline
+
+  [Picture 3 (Picture 4)]: image bytes: 48085 bytes, format: image/jpeg
+  [Text Shape 5 (TextBox 6)]:
+1. Subject Holdout Split
+• Stratified 80/20 train/test split.• 188 Training Subjects (108 Ctr, 80 Dem).• 47 Held-Out Test Subjects (27 Ctr, 20 Dem).• Zero subject ID intersection.
+
+  [Text Shape 7 (TextBox 8)]:
+2. Leak-Free Pipeline
+• ColumnTransformer encapsulation.• Median imputation fit solely on train.• StandardScaler z-score normalization.• OneHotEncoder for biological sex.
+
+  [Text Shape 9 (TextBox 10)]:
+3. Model & XAI Verification
+• 5-Fold Stratified Cross-Validation.• Final evaluation on held-out test set.• Modality ablation (Clinical vs MRI).• TreeSHAP beeswarm & waterfall plots.
+
+================================================================================
+SLIDE 7
+--------------------------------------------------------------------------------
+[SPEAKER NOTES]:
+On slide 7, we detail our feature engineering and pipeline design. In addition to raw OASIS-1 variables, we engineer the Brain Atrophy Index, which is 1 minus normalized whole brain volume. Notice how our ColumnTransformer handles both numerical and categorical features without any test data leaking into the imputation medians or standard scaler means.
+
+  [Text Shape 0 (TextBox 1)]:
+PREPROCESSING & FEATURE DERIVATION
+
+  [Text Shape 1 (TextBox 2)]:
+Feature Preprocessing & Neuroimaging Engineering
+
+  [Text Shape 3 (TextBox 4)]:
+Engineered Neuroimaging Indices
+1. Brain Atrophy Index: Defined as (1.0 - nWBV). Direct inverse of normalized brain volume; directly measures parenchymal tissue loss percentage.
+2. Normalized Intracranial Volume: Calculated as (eTIV * ASF) / 1000. Provides calibrated cranial cavity normalization across head sizes.
+3. Cognitive Brain Reserve: Interaction product (MMSE * nWBV). Models the clinical buffer hypothesis—higher brain volume mitigates cognitive deficits.
+
+  [Text Shape 5 (TextBox 6)]:
+Zero-Leakage Transformation Pipeline
+SimpleImputer(strategy='median'): Fits median SES exclusively on training fold. Test missing values receive the training median, preventing test distribution leakage.
+StandardScaler(): Calculates μ_train and σ_train on training fold. Test features scaled via x_test_norm = (x_test - μ_train) / σ_train.
+OneHotEncoder(drop='first'): Encodes biological sex into binary Gender_Male (0=Female, 1=Male).
+Ablation Subsets: Features grouped into Clinical-Only (5 feats), MRI-Only (4 feats), and Multimodal (9 feats).
+
+================================================================================
+SLIDE 8
+--------------------------------------------------------------------------------
+[SPEAKER NOTES]:
+Slide 8 outlines the 6 models benchmarked in this study. We deliberately selected diverse learning paradigms: a linear model (Logistic Regression), a bagging tree ensemble (Random Forest), a kernel margin maximizer (SVM), a boosting ensemble (Gradient Boosting), and a soft-voting ensemble that averages their posterior probabilities. The Dummy Classifier serves as our scientific baseline.
+
+  [Text Shape 0 (TextBox 1)]:
+MODEL SELECTION & INDUCTIVE BIASES
+
+  [Text Shape 1 (TextBox 2)]:
+Classification Models & Ensemble Architecture
+
+  [Text Shape 3 (TextBox 4)]:
+Dummy Baseline
+Zero-Rule Lower Bound
+Predicts majority class (Control). Accuracy 57.45%, Sensitivity 0.0%, ROC-AUC 0.5000. Confirms true learning in active models.
+
+  [Text Shape 5 (TextBox 6)]:
+Logistic Regression
+Regularized Linear Baseline
+L2-regularized with L-BFGS solver. Fast convergence, convex optimization, and highly interpretable log-odds coefficients.
+
+  [Text Shape 7 (TextBox 8)]:
+Random Forest
+Bagged Tree Ensemble
+100 de-correlated trees, max_depth=5. Handles non-linear interactions, robust to tabular outliers, prevents overfitting.
+
+  [Text Shape 9 (TextBox 10)]:
+Support Vector Machine
+Kernel Margin Maximizer
+RBF kernel mapping features to infinite-dimensional Hilbert space. Calibrated probabilities via Platt scaling.
+
+  [Text Shape 11 (TextBox 12)]:
+Gradient Boosting
+Sequential Residual Boosting
+100 shallow estimators with shrinkage (η=0.05). Iteratively fits decision trees to pseudo-residuals.
+
+  [Text Shape 13 (TextBox 14)]:
+Soft-Voting Ensemble
+Bayesian Posterior Averaging
+Combines LR, RF, SVC, and GB: p(y=1|x) = 1/M * Σ p_m(y=1|x). Reduces individual model variance and prediction errors.
+
+================================================================================
+SLIDE 9
+--------------------------------------------------------------------------------
+[SPEAKER NOTES]:
+Slide 9 establishes the theory behind SHAP. Why SHAP instead of simple Gini importance? Gini importance is biased toward high-cardinality features and lacks additivity. SHAP satisfies the four fundamental axioms of cooperative game theory: Efficiency, Symmetry, Dummy, and Additivity. TreeSHAP computes exact Shapley values in polynomial time, enabling both global biomarker audits and individualized waterfall plots.
+
+  [Text Shape 0 (TextBox 1)]:
+THEORETICAL EXPLAINABILITY FRAMEWORK
+
+  [Text Shape 1 (TextBox 2)]:
+Explainable AI (XAI) Using Game-Theoretic SHAP
+
+  [Text Shape 3 (TextBox 4)]:
+Mathematical Foundations of SHAP
+Unified Attribution: SHAP connects game-theoretic Shapley values with local surrogate explanations (Lundberg & Lee, 2017).
+Additive Decomposition: Model output is decomposed as: f(x) = φ₀ + Σ φᵢ(x), where φ₀ is baseline expectation and φᵢ is feature contribution.
+Axiom 1 - Efficiency: Sum of feature attributions equals the difference between model output and expected baseline.
+Axiom 2 - Symmetry: Features contributing identically across all subsets receive identical attribution.
+Axiom 3 - Additivity: For ensemble models, feature attributions sum linearly across component trees: φᵢ(f + g) = φᵢ(f) + φᵢ(g).
+
+  [Text Shape 5 (TextBox 6)]:
+TreeSHAP & Clinical Translation
+Polynomial Complexity: TreeSHAP calculates exact attributions in O(T L D²) time instead of exponential time, making it practical for real-time clinical screening.
+Global Feature Audit: Calculates mean absolute SHAP across all test patients, revealing which biological markers universally drive dementia predictions.
+Patient-Level Explanations: Waterfall plots show exact risk factors pushing an individual patient toward or away from a dementia diagnosis.
+Eliminating 'Black-Box' Risk: Enables clinicians to verify that predictions align with known neuropathology rather than spurious dataset artifacts.
+
+================================================================================
+SLIDE 10
+--------------------------------------------------------------------------------
+[SPEAKER NOTES]:
+Slide 10 documents our exact experimental setup. Operating System: Windows 11 64-bit, Python 3.14, 16 GB RAM. Random seed 42 is pinned across Python, NumPy, and scikit-learn. Notice that our hyperparameters are fixed and defensive; we deliberately avoided exhaustive grid searches to prevent hyperparameter overfitting on the training cohort.
+
+  [Text Shape 0 (TextBox 1)]:
+TESTING ENVIRONMENT & RIGOR
+
+  [Text Shape 1 (TextBox 2)]:
+Experimental Environment & Hyperparameter Setup
+
+  [Table 3]: 7 rows x 4 cols
+    | Model Component | Hyperparameters | Search / Optimization | Reproducibility Seed |
+    | Dummy Baseline | strategy = 'most_frequent' | None (Analytical empirical baseline) | seed = 42 |
+    | Logistic Regression | C = 1.0, max_iter = 1000, solver = 'lbfgs' | L-BFGS quasi-Newton optimization | seed = 42 |
+    | Random Forest | n_estimators=100, max_depth=5, min_split=5 | Constrained tree depth to prevent overfitting | seed = 42 |
+    | Support Vector Machine | C = 1.0, kernel = 'rbf', probability = True | Platt scaling cross-calibration | seed = 42 |
+    | Gradient Boosting | n_estimators=100, lr=0.05, max_depth=3 | Gradient tree boosting with shrinkage | seed = 42 |
+    | Voting Ensemble | voting = 'soft', weights = equal [1, 1, 1, 1] | Ensemble probability distribution averaging | seed = 42 |
+
+================================================================================
+SLIDE 11
+--------------------------------------------------------------------------------
+[SPEAKER NOTES]:
+Slide 11 presents our headline experimental results on the held-out test cohort of 47 patients. Every single number is genuine and reproducible. Notice that Random Forest achieved an outstanding ROC-AUC of 0.9370, an accuracy of 80.85%, and specificity of 88.89%. Logistic Regression also achieved 80.85% accuracy with 75% sensitivity and an ROC-AUC of 0.9093. The Soft-Voting Ensemble achieved 0.9296 ROC-AUC, confirming consistent predictive robustness.
+
+  [Text Shape 0 (TextBox 1)]:
+EXPERIMENTAL FINDINGS & METRICS
+
+  [Text Shape 1 (TextBox 2)]:
+Empirical Classification Results (Held-Out Test Set)
+
+  [Table 3]: 7 rows x 8 cols
+    | Model Architecture | Accuracy | Balanced Acc. | Precision | Recall | Specificity | F1-Score | ROC-AUC |
+    | Dummy Baseline | 57.45% | 50.00% | 0.00% | 0.00% | 100.00% | 0.0000 | 0.5000 |
+    | Logistic Regression | 80.85% | 80.09% | 78.95% | 75.00% | 85.19% | 0.7692 | 0.9093 |
+    | Random Forest | 80.85% | 79.44% | 82.35% | 70.00% | 88.89% | 0.7568 | 0.9370 |
+    | Support Vector Machine | 78.72% | 78.24% | 75.00% | 75.00% | 81.48% | 0.7500 | 0.9120 |
+    | Gradient Boosting | 78.72% | 77.59% | 77.78% | 70.00% | 85.19% | 0.7368 | 0.9222 |
+    | Soft Voting Ensemble | 78.72% | 77.59% | 77.78% | 70.00% | 85.19% | 0.7368 | 0.9296 |
+
+  [Text Shape 4 (TextBox 5)]:
+Key Findings on Held-Out Test Cohort (N=47; 27 Control, 20 Dementia):
+• Top Discriminative Power: Random Forest achieved the highest ROC-AUC of 0.9370 and Precision-Recall AUC of 0.9277.• Clinical Balance: Logistic Regression achieved 80.85% accuracy and 0.8009 balanced accuracy with 75.00% recall.• Ensemble Stability: Soft Voting Ensemble delivered 0.9296 ROC-AUC, demonstrating strong posterior probability calibration.
+
+================================================================================
+SLIDE 12
+--------------------------------------------------------------------------------
+[SPEAKER NOTES]:
+On slide 12, we visually inspect classifier discriminative ability. In the ROC curve on the left, all five active models operate far above the chance diagonal. Random Forest and Soft Voting Ensemble exhibit exceptional true positive rates even at low false positive rates. On the right, the confusion matrices show the exact breakdown: for Random Forest, 24 True Negatives and 14 True Positives, with only 3 False Positives, giving a clinical specificity of nearly 89%.
+
+  [Text Shape 0 (TextBox 1)]:
+VISUAL PERFORMANCE AUDIT
+
+  [Text Shape 1 (TextBox 2)]:
+ROC Analysis & Confusion Matrix Performance
+
+  [Picture 3 (Picture 4)]: image bytes: 94708 bytes, format: image/jpeg
+  [Text Shape 4 (TextBox 5)]:
+Fig 3: Multimodel ROC Curves (Random Forest AUC = 0.937, Ensemble AUC = 0.930).
+
+  [Picture 6 (Picture 7)]: image bytes: 78515 bytes, format: image/jpeg
+  [Text Shape 7 (TextBox 8)]:
+Fig 4: Annotated Confusion Matrices on Test Cohort (N=47; 27 Control, 20 Dementia).
+
+================================================================================
+SLIDE 13
+--------------------------------------------------------------------------------
+[SPEAKER NOTES]:
+Slide 13 provides the core scientific deliverable: explainability through TreeSHAP. On the left, the global summary plot reveals that MMSE cognitive score and the Brain Atrophy Index (1 - nWBV) are the two primary drivers of the ensemble. Lower MMSE and higher Atrophy Index strongly push predictions toward dementia. On the right, we show local patient waterfall plots: for Subject OAS1_0002 (a healthy control), high cognitive score and intact brain volume drop dementia risk to 0.05. For Subject OAS1_0003, impaired cognition and brain atrophy push risk to 0.84.
+
+  [Text Shape 0 (TextBox 1)]:
+EXPLAINABLE AI IN ACTION
+
+  [Text Shape 1 (TextBox 2)]:
+SHAP Interpretability & Patient Case Explanations
+
+  [Picture 3 (Picture 4)]: image bytes: 61122 bytes, format: image/jpeg
+  [Text Shape 4 (TextBox 5)]:
+Fig 6: Global SHAP Feature Importance Ranking & Beeswarm Effect Distribution.
+
+  [Picture 6 (Picture 7)]: image bytes: 75446 bytes, format: image/jpeg
+  [Text Shape 7 (TextBox 8)]:
+Fig 7: Individual Patient Decision Rationales: True Negative vs. True Positive.
+
+================================================================================
+SLIDE 14
+--------------------------------------------------------------------------------
+[SPEAKER NOTES]:
+In conclusion, we have demonstrated a defensible, reproducible, and explainable multimodal machine learning system for dementia classification. Our Random Forest model achieved an ROC-AUC of 0.9370, proving that combining clinical cognitive tests with structural MRI volumetrics delivers significant diagnostic enhancements. Thank you for your time and attention. Jay and I are now open to your questions.
+
+  [Text Shape 0 (TextBox 1)]:
+RESEARCH IMPACT & REFERENCES
+
+  [Text Shape 1 (TextBox 2)]:
+Conclusion, Future Horizons & Key References
+
+  [Text Shape 3 (TextBox 4)]:
+Summary of Contributions
+Methodological Rigor: Zero data leakage via strict subject-level holdout (N=188 train, N=47 test) and pipeline encapsulation.
+Multimodal Superiority: Adding structural MRI to clinical data boosted ROC-AUC from 0.9000 to 0.9370 (+0.037 gain; +0.137 over MRI alone).
+Model Performance: Random Forest achieved 0.9370 ROC-AUC, 0.9277 PR-AUC, 80.85% accuracy, and 88.89% specificity.
+Game-Theoretic Transparency: TreeSHAP confirmed MMSE and Atrophy Index as dominant biological drivers, providing actionable clinician trust.
+Future Research: Extend to longitudinal tracking (OASIS-2/3) and integrate regional hippocampal/entorhinal cortex sub-segmentation.
+
+  [Text Shape 5 (TextBox 6)]:
+Selected Peer-Reviewed References
+[1] Marcus et al., 'OASIS: Cross-sectional MRI Data...', J. Cogn. Neurosci., 2007.
+[2] Lundberg & Lee, 'A Unified Approach to Interpreting Model Predictions', NeurIPS, 2017.
+[3] Yi et al., 'XGBoost-SHAP-based Interpretable Diagnostic Framework...', BMC Med. Inform., 2023.
+[4] Wen et al., 'Convolutional Neural Networks for AD: Overview and Evaluation', Med. Image Anal., 2020.
+[5] Bogdanovic et al., 'Explainable AI in Alzheimer's Disease: A Systematic Review', Alz. Res. Ther., 2022.
+[6] Venugopalan et al., 'Multimodal Deep Learning Models for Early Detection...', Sci. Rep., 2021.
+[7] Ren et al., 'Utilizing Multimodal Models to Forecast AD Progression...', Health Inf. Sci., 2026.
+[8] Alam et al., 'Ensemble Machine Learning for Alzheimer's Detection...', Diagnostics, 2022.
+Thank you! We welcome questions from the evaluation committee.
+
